@@ -52,7 +52,13 @@ async function requestBluetoothPermission() {
 }
 
 function scanAndConnect() {
-  manager.startDeviceScan(null, null, (error, device) => {
+  const permission = requestBluetoothPermission();
+  console.log(permission)
+  if (!permission) {
+    return;
+  }
+
+    manager.startDeviceScan(null, null, (error, device) => {
     if (error) {
       // Handle error (scanning will be stopped automatically)
       return;
@@ -72,7 +78,7 @@ function scanAndConnect() {
 
 export default function TabOneScreen() {
   useEffect(() => {
-    // requestBluetoothPermission();
+    requestBluetoothPermission();
   }, []);
 
   useEffect(() => {
@@ -83,7 +89,7 @@ export default function TabOneScreen() {
       }
     }, true);
     return () => subscription.remove();
-  }, [manager]);
+  }, []);
 
   return (
     <View style={styles.container}>
