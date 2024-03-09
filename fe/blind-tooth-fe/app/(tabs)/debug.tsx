@@ -56,11 +56,6 @@ export default function TabOneScreen() {
 
     const [count, setCount] = useState(0);
 
-    const [magnetometerX, setMagnetometerX] = useState(Array.from({ length: 20 }, () => 0))
-    const [magnetometerY, setMagnetometerY] = useState(Array.from({ length: 20 }, () => 0))
-
-    const [subscription, setSubscription] = useState<any>(null);
-
     useEffect(() => {
         const interval = setInterval(() => {
             NetInfo.refresh()
@@ -80,70 +75,9 @@ export default function TabOneScreen() {
         return () => clearInterval(interval);
     }, []);
 
-
-    Magnetometer.setUpdateInterval(1000)
-
-    const _subscribe = () => {
-        Magnetometer.isAvailableAsync().then((available) => {
-            if (!available) {
-                Magnetometer.requestPermissionsAsync().then((status) => {
-                    if (!status.granted) {
-                        alert("Permission to access location was denied");
-                    }
-
-                    setSubscription(
-                        Magnetometer.addListener((MagnetometerData) => {
-                            setMagnetometerX((prev) => {
-                                const newData = [...prev]; // Create a copy of the current data array
-                                newData.shift(); // Remove the first element
-                                return [...newData,MagnetometerData.x]
-                            }); // Update the state with the new data
-
-
-                            setMagnetometerY((prev) => {
-                                const newData = [...prev]; // Create a copy of the current data array
-                                newData.shift(); // Remove the first element
-                                return [...newData,MagnetometerData.y]
-                            }); // Update the state with the new data
-                        })
-                    );
-                });
-            }
-        });
-
-        setSubscription(
-            Magnetometer.addListener((MagnetometerData) => {
-                setMagnetometerX((prev) => {
-                    const newData = [...prev]; // Create a copy of the current data array
-                    newData.shift(); // Remove the first element
-                    return [...newData,MagnetometerData.x]
-                }); // Update the state with the new data
-
-
-                setMagnetometerY((prev) => {
-                    const newData = [...prev]; // Create a copy of the current data array
-                    newData.shift(); // Remove the first element
-                    return [...newData,MagnetometerData.y]
-                }); // Update the state with the new data
-            })
-        );
-    };
-
-    const _unsubscribe = () => {
-        subscription && subscription.remove();
-        setSubscription(null);
-    };
-
-    useEffect(() => {
-        _subscribe();
-        return () => _unsubscribe();
-    }, []);
-
     return (
         <ScrollView style={styles.container}>
             <SimpleLineChart data={[...strenghtChartData]} />
-            <SimpleLineChart data={[...magnetometerX]} />
-            <SimpleLineChart data={[...magnetometerY]} />
             <EditScreenInfo path="app/(tabs)/index.tsx" />
             {(netInfo as any) && (
                 <Text>{JSON.stringify(netInfo as any, null, 2)}</Text>
