@@ -1,19 +1,9 @@
-import { PermissionsAndroid, Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { View } from "@/components/Themed";
 
-// import { BleManager } from "react-native-ble-plx";
 import { useEffect, useState } from "react";
-
-import * as Network from "expo-network";
-
-import {
-  addEventListener,
-  useNetInfo,
-  fetch as fetchNetInfo,
-  configure,
-} from "@react-native-community/netinfo";
 
 import * as NetInfo from "@react-native-community/netinfo";
 import { Button, Surface, Text } from "react-native-paper";

@@ -1,10 +1,9 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from 'react';
+import {Image, View, Text, Dimensions, TouchableOpacity} from 'react-native';
+import { Grid, Col, Row } from 'react-native-easy-grid';
+import { Magnetometer } from 'expo-sensors';
 
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
-import { useEffect, useState } from "react";
-
-import { Magnetometer } from "expo-sensors";
+const { height, width } = Dimensions.get('window');
 
 export default function App() {
   const [{ x, y, z }, setData] = useState({
@@ -92,60 +91,60 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Magnetometer:</Text>
-      <Text style={styles.text}>x: {x}</Text>
-      <Text style={styles.text}>y: {y}</Text>
-      <Text style={styles.text}>z: {z}</Text>
 
-      <Text>{_degree(magnetometer)}</Text>
-      <Text>{_direction(_degree(magnetometer))}</Text>
+      <Grid style={{ backgroundColor: 'black' }}>
+        <Row style={{ alignItems: 'center' }} size={.9}>
+          <Col style={{ alignItems: 'center' }}>
+            <Text
+                style={{
+                  color: '#fff',
+                  fontSize: height / 26,
+                  fontWeight: 'bold'
+                }}>
+              {_direction(_degree(magnetometer))}
+            </Text>
+          </Col>
+        </Row>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={subscription ? _unsubscribe : _subscribe}
-          style={styles.button}
-        >
-          <Text>{subscription ? "On" : "Off"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={_slow}
-          style={[styles.button, styles.middleButton]}
-        >
-          <Text>Slow</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_fast} style={styles.button}>
-          <Text>Fast</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <Row style={{ alignItems: 'center' }} size={.1}>
+          <Col style={{ alignItems: 'center' }}>
+            <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
+              <Image source={require('../../assets/images/compass_pointer.png')} style={{
+                height: height / 26,
+                resizeMode: 'contain'
+              }} />
+            </View>
+          </Col>
+        </Row>
+
+        <Row style={{ alignItems: 'center' }} size={2}>
+          <Text style={{
+            color: '#fff',
+            fontSize: height / 27,
+            width: width,
+            position: 'absolute',
+            textAlign: 'center'
+          }}>
+            {_degree(magnetometer)}°
+          </Text>
+
+          <Col style={{ alignItems: 'center' }}>
+
+            <Image source={require("../../assets/images/compass_bg.png")} style={{
+              height: width - 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              resizeMode: 'contain',
+              transform: [{ rotate: 360 - magnetometer + 'deg' }]
+            }} />
+
+          </Col>
+        </Row>
+
+        <Row style={{ alignItems: 'center' }} size={1}>
+        </Row>
+
+      </Grid>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 10,
-  },
-  text: {
-    textAlign: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "stretch",
-    marginTop: 15,
-  },
-  button: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#eee",
-    padding: 10,
-  },
-  middleButton: {
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderColor: "#ccc",
-  },
-});
