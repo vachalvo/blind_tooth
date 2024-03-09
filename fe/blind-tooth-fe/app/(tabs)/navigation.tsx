@@ -11,13 +11,15 @@ import { vibrateLong, vibrateShort } from "@/utils/vibrations";
 import { ResponseData, useCache } from "@/utils/cache";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { REGISTRATION_KEY } from "../register";
-import { Redirect } from "expo-router";
+import {Redirect, useLocalSearchParams, useRouter} from "expo-router";
 import MagnetometerUtils from "@/utils/magnetometerUtils";
 import Colors from "@/constants/Colors";
 
 const { height, width } = Dimensions.get("window");
 
 export default function App() {
+    const {friendUserId} = useLocalSearchParams<{ friendUserId?: string }>()
+
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [latestData, setLatestData] = useState<ResponseData>();
   const { getItem } = useAsyncStorage(REGISTRATION_KEY);
@@ -117,8 +119,7 @@ export default function App() {
           "https://7gw9q7p1i4.execute-api.eu-west-1.amazonaws.com/default/getData",
           {
             params: {
-              // TODO, tady musi byt kamarad
-              userId: "David",
+              userId: friendUserId,
             },
             headers: {
               ["logged-user-id"]: userId,

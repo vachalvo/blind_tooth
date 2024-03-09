@@ -140,7 +140,7 @@ export default function TabOneScreen() {
 
             <View style={{height: 30}}/>
 
-            <Link href="/(tabs)/navigation">
+            <Link href="/(tabs)/contacts">
                 <Button
                     style={{
                         backgroundColor: Colors.navigation.background,
@@ -157,7 +157,7 @@ export default function TabOneScreen() {
                     Hledej
                 </Button>
             </Link>
-    
+
       <Link href="/findMe">
         <Button
           style={{

@@ -7,6 +7,7 @@ import Calls from "@/utils/api/client";
 import {ResponseData} from "@/utils/cache";
 import {useAsyncStorage} from "@react-native-async-storage/async-storage";
 import {REGISTRATION_KEY} from "@/app/register";
+import {useRouter} from "expo-router";
 
 type userId = {
   userId: string
@@ -48,6 +49,17 @@ export default function App() {
     setContacts(users);
   }
 
+  const router = useRouter()
+
+  function navigateToNavigation(userId: string) {
+    router.push({
+      pathname: "/(tabs)/navigation",
+      params: {
+        friendUserId: userId
+      },
+    })
+  }
+
   return (
     <View style={styles.container}>
       <Searchbar
@@ -66,7 +78,8 @@ export default function App() {
         <Text style={styles.text}>
         {contact.userId}
         </Text>
-        <Button icon="human-greeting-proximity" mode="contained" onPress={() => console.log('Pressed')}
+        <Button
+            icon="human-greeting-proximity" mode="contained" onPress={() =>navigateToNavigation(contact.userId)}
                 contentStyle={{flexDirection: 'row-reverse'}}
         >
           Propojit
