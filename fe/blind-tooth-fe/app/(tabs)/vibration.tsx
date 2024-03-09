@@ -105,13 +105,13 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => Audio.ShortSeqence(1)} style={styles.button}>
+        <TouchableOpacity onPress={() => Audio.MixSeqence(1)} style={styles.button}>
           <Text>short</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Audio.ShortSeqence(2, -100)} style={styles.button}>
+        <TouchableOpacity onPress={() => Audio.MixSeqence(2, -2400)} style={styles.button}>
           <Text>short2</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Audio.MixSeqence(3, -2200)} style={styles.button}>
+        <TouchableOpacity onPress={() => Audio.MixSeqence(3, -2400)} style={styles.button}>
           <Text>short3</Text>
         </TouchableOpacity>
       </View>

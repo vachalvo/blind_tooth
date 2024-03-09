@@ -11,7 +11,8 @@ const beepShort = ExpoAV.Audio.Sound.createAsync(require('../assets/sounds/beep_
 });
 const beepMix = ExpoAV.Audio.Sound.createAsync(require('../assets/sounds/beep_mix.wav'));
 
-async function audioSequence(this: Promise<SoundObject>, times: number, pause = 0) {
+async function audioSequence(this: Promise<SoundObject>, times: number, pause?: number) {
+    pause ||= 0;
     const { sound, status } = await this;
     const durationMillis = (status as any).durationMillis;
     async function action() {
@@ -19,7 +20,8 @@ async function audioSequence(this: Promise<SoundObject>, times: number, pause = 
         await sound.setPositionAsync(0);
         await sound.playAsync();
     }
-    const interval = times > 1 ? setInterval(action, durationMillis + pause) : -2;
+    console.log(durationMillis, arguments, durationMillis + pause, pause)
+    const interval = times > 1 ? setInterval(action, durationMillis + pause) : -1;
     action();
 }
 
