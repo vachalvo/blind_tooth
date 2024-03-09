@@ -1,6 +1,11 @@
-import {Dimensions, ScrollView, StyleSheet} from "react-native";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
-import { Chart, VerticalAxis, HorizontalAxis, Line } from 'react-native-responsive-linechart'
+import {
+  Chart,
+  VerticalAxis,
+  HorizontalAxis,
+  Line,
+} from "react-native-responsive-linechart";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { View } from "@/components/Themed";
@@ -10,95 +15,98 @@ import { useEffect, useState } from "react";
 import * as NetInfo from "@react-native-community/netinfo";
 import { Button, Text } from "react-native-paper";
 
-import React from 'react';
-import { LineChart } from 'react-native-chart-kit';
-import {Magnetometer} from "expo-sensors";
+import React from "react";
+import { LineChart } from "react-native-chart-kit";
+import { Magnetometer } from "expo-sensors";
 
 const SimpleLineChart = ({ data }: any) => {
-    const labels = Array.from({ length: 20 }, (_, i) => (i + 1).toString()); // Create labels dynamically
+  const labels = Array.from({ length: 20 }, (_, i) => (i + 1).toString()); // Create labels dynamically
 
-    return (
-        <LineChart
-            data={{
-                labels: labels,
-                datasets: [
-                    {
-                        data: data,
-                    },
-                ],
-            }}
-            width={Dimensions.get('window').width} // from react-native
-            height={220}
-            yAxisInterval={1}
-            chartConfig={{
-                backgroundColor: '#ffffff',
-                backgroundGradientFrom: '#ffffff',
-                backgroundGradientTo: '#ffffff',
-                decimalPlaces: 0, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                    borderRadius: 16,
-                },
-                propsForDots: {
-                    r: '6',
-                    strokeWidth: '2',
-                    stroke: '#ffa726',
-                },
-            }}
-        />
-    );
+  return (
+    <LineChart
+      data={{
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+          },
+        ],
+      }}
+      width={Dimensions.get("window").width} // from react-native
+      height={220}
+      yAxisInterval={1}
+      chartConfig={{
+        backgroundColor: "#ffffff",
+        backgroundGradientFrom: "#ffffff",
+        backgroundGradientTo: "#ffffff",
+        decimalPlaces: 0, // optional, defaults to 2dp
+        color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        style: {
+          borderRadius: 16,
+        },
+        propsForDots: {
+          r: "6",
+          strokeWidth: "2",
+          stroke: "#ffa726",
+        },
+      }}
+    />
+  );
 };
 
 export default function TabOneScreen() {
-    const [netInfo, setNetInfo] = useState<unknown>();
-    const [strenghtChartData, setStrenghtChartData] = useState(Array.from({ length: 20 }, () => 0))
+  const [netInfo, setNetInfo] = useState<unknown>();
+  const [strenghtChartData, setStrenghtChartData] = useState(
+    Array.from({ length: 20 }, () => 0)
+  );
 
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            NetInfo.refresh()
-                .then((state) => {
-                    setNetInfo(() => state);
-                    setCount((prev) => prev + 1);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      NetInfo.refresh()
+        .then((state) => {
+          setNetInfo(() => state);
+          setCount((prev) => prev + 1);
 
-                    setStrenghtChartData((prev) => {
-                        const newData = [...prev]; // Create a copy of the current data array
-                        newData.shift(); // Remove the first element
-                        return [...newData, state.details.strength ?? -1]
-                    }); // Update the state with the new data
-                })
-                .catch((err) => console.error(err));
-        }, 1000);
+          setStrenghtChartData((prev) => {
+            const newData = [...prev]; // Create a copy of the current data array
+            newData.shift(); // Remove the first element
+            return [...newData, state.details.strength ?? -1];
+          }); // Update the state with the new data
+        })
+        .catch((err) => console.error(err));
+    }, 1000);
 
-        return () => clearInterval(interval);
-    }, []);
+    return () => clearInterval(interval);
+  }, []);
 
-    return (
-        <ScrollView style={styles.container}>
-            <SimpleLineChart data={[...strenghtChartData]} />
-            <EditScreenInfo path="app/(tabs)/index.tsx" />
-            {(netInfo as any) && (
-                <Text>{JSON.stringify(netInfo as any, null, 2)}</Text>
-            )}
+  return (
+    // <ScrollView style={styles.container}>
+    //     <SimpleLineChart data={[...strenghtChartData]} />
+    //     <EditScreenInfo path="app/(tabs)/index.tsx" />
+    //     {(netInfo as any) && (
+    //         <Text>{JSON.stringify(netInfo as any, null, 2)}</Text>
+    //     )}
 
-            {count > 0 && <Text>{count}</Text>}
-        </ScrollView>
-    );
+    //     {count > 0 && <Text>{count}</Text>}
+    // </ScrollView>
+    <View />
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: "80%",
-    },
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: "80%",
+  },
 });

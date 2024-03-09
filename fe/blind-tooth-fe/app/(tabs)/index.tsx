@@ -6,9 +6,10 @@ import { View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 
 import * as NetInfo from "@react-native-community/netinfo";
-import { Button, Surface, Text } from "react-native-paper";
+import { Surface, Text } from "react-native-paper";
 import { Link } from "expo-router";
 import Colors from "@/constants/Colors";
+import { Button } from "@/components/Button";
 import Calls from "@/app/api";
 
 export default function TabOneScreen() {
@@ -26,7 +27,7 @@ export default function TabOneScreen() {
           setCount((prev) => prev + 1);
         })
         .catch((err) => console.error(err));
-    }, 5000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
@@ -65,8 +66,6 @@ export default function TabOneScreen() {
           style={{
             display: "flex",
             gap: 12,
-            borderWidth: 2,
-            borderColor: "white",
           }}
         >
           <Button
@@ -109,8 +108,6 @@ export default function TabOneScreen() {
           style={{
             display: "flex",
             gap: 12,
-            borderWidth: 2,
-            borderColor: "white",
           }}
         >
           <Button
