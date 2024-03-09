@@ -6,7 +6,7 @@ type Props = ComponentPropsWithRef<typeof PaperButton>;
 
 export function Button({ children, ...props }: Props) {
   return (
-    <PaperButton {...props} labelStyle={{ color: Colors.dark.background }}>
+    <PaperButton {...props} labelStyle={{ color: props?.textColor ?? Colors.light.background }}>
       {children}
     </PaperButton>
   );

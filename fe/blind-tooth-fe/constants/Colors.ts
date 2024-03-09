@@ -18,12 +18,14 @@ export default {
   },
 
   navigation: {
-    background: "#56CCF2",
+    background: "#EC4E20",
+    color: "white"
   },
 
-  contacts: { background: "#00B812" },
-  share: { background: "#FF00D6" },
+  contacts: { background: "#016FB9", color: "white" },
+  share: { background: "#F9DBBD" , color: "black"},
   vibrations: {
     background: "#FFFFFF",
+    color: "black"
   },
 };
