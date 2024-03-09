@@ -54,7 +54,7 @@ function RootLayoutNav() {
 
   return (
     <PaperProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={DarkTheme}>
         <Stack>
           <Stack.Screen
             name="(tabs)"
