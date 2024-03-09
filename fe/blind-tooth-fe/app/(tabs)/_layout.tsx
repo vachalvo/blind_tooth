@@ -56,9 +56,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="vibration"
+        name="gps"
         options={{
-          title: "Vibration",
+          title: "GPS",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

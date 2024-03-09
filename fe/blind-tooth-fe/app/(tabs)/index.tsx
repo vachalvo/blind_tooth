@@ -47,6 +47,8 @@ export default function TabOneScreen() {
           },
           "wifiSignalStrength": null
       })
+
+      console.log(ressss)
   }
 
   return (
