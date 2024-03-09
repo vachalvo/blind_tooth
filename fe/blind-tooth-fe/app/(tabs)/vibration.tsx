@@ -94,17 +94,25 @@ export default function App() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => Audio.Beep()} style={styles.button}>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(1)} style={styles.button}>
           <Text>beep</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Audio.BeepSeqence(2)} style={styles.button}>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(2, -1000)} style={styles.button}>
           <Text>beep2</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Audio.BeepSeqence(2, 1000)} style={styles.button}>
-          <Text>beep2-</Text>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(3, -1000)} style={styles.button}>
+          <Text>beep3</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Audio.BeepSeqence(4, -1500)} style={styles.button}>
-          <Text>beep4</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Audio.ShortSeqence(1)} style={styles.button}>
+          <Text>short</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.ShortSeqence(2, -100)} style={styles.button}>
+          <Text>short2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.MixSeqence(3, -2200)} style={styles.button}>
+          <Text>short3</Text>
         </TouchableOpacity>
       </View>
     </View>
