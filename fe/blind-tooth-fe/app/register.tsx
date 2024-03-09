@@ -9,39 +9,35 @@ import Calls from "@/utils/api/client";
 import {navigate} from "expo-router/build/global-state/routing";
 import {router} from "expo-router";
 
-const REGISTRATION_KEY = "registrationKey";
+export const REGISTRATION_KEY = "registrationKey";
 
 export default function App() {
-    const { getItem, setItem, removeItem } = useAsyncStorage(REGISTRATION_KEY);
+    const {  setItem } = useAsyncStorage(REGISTRATION_KEY);
     const [text, setText] = useState("");
-    const [error, setError] = useState(false)
-
-    useEffect(() => {
-        getItem().then((uu) => {
-            if(uu !== null)
-                router.replace("/(tabs)")
-        })
-
-        removeItem()
-    }, []);
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const handleRegister = async () => {
-        console.log(text);
         if(text.length === 0) {
-            setError(true)
+            setError("Vyplňte prosím jméno")
             return;
         }
 
-        setError(false)
+        setError("")
 
+        setLoading(true)
         const body = {
             userId: text
         };
         const res = await Calls.post("users", body)
-        setItem(JSON.stringify(body))
-        router.replace("/(tabs)")
-
-        console.log(res.data)
+        if(res.status === 200) {
+            setItem(JSON.stringify(body))
+            router.replace("/(tabs)")
+            setLoading(false)
+            return;
+        }
+        setLoading(false)
+        setError("Jméno již existuje. Vyberte jiné jméno.")
     }
 
     return (
@@ -54,7 +50,9 @@ export default function App() {
                     label="Jméno"
                     value={text}
                     onChangeText={text => setText(text)}
-                    error={error}
+                    error={error.length > 0}
+                    disabled={loading}
+                    editable={!loading}
                 />
                 {error && <Text style={{color: "red"}}>
                     Napište svoje jméno
@@ -62,7 +60,7 @@ export default function App() {
                 <View style={{flex: 1}} />
                 <Button style={{
                     backgroundColor: Colors.contacts.background,
-                }} onPress={handleRegister}>
+                }} onPress={handleRegister} disabled={loading}>
                     Registrovat
                 </Button>
             </View>

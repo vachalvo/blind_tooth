@@ -2,16 +2,33 @@ import { StyleSheet } from "react-native";
 
 import { View } from "@/components/Themed";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
 import { Surface, Text } from "react-native-paper";
-import { Link } from "expo-router";
+import {Link, Redirect} from "expo-router";
 import Colors from "@/constants/Colors";
 import { Button } from "@/components/Button";
+import {useAsyncStorage} from "@react-native-async-storage/async-storage";
+import {REGISTRATION_KEY} from "@/app/register";
 
 export default function TabOneScreen() {
   const [netInfo, setNetInfo] = useState<unknown>();
   const [count, setCount] = useState(0);
+  const { getItem } = useAsyncStorage(REGISTRATION_KEY);
+    const [loading, setLoading] = useState(true)
+    const [userId, setUserId] = useState<string | null>(null)
+
+    useEffect(() => {
+        getItem().then((res) => {
+            setUserId(res)
+            setLoading(false)
+        })
+    }, []);
+
+    if(loading) return <Text>Loading...</Text>
+
+    if(userId === null)
+      return <Redirect href={"/register"} />
 
   return (
     <View style={styles.container}>
