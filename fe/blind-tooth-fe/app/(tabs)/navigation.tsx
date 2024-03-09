@@ -13,6 +13,7 @@ import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { REGISTRATION_KEY } from "../register";
 import { Redirect } from "expo-router";
 import MagnetometerUtils from "@/utils/magnetometerUtils";
+import Colors from "@/constants/Colors";
 
 const { height, width } = Dimensions.get("window");
 
@@ -198,70 +199,45 @@ export default function App() {
   );
 
   return (
-    <Grid style={{ backgroundColor: "yellow" }}>
-      <ScrollView>
-        <Text variant="bodySmall">{JSON.stringify(latestData)}</Text>
+     <Grid style={{backgroundColor: Colors.navigation.background}}>
+         <Row style={{ alignItems: 'center' }} size={2}>
+             <Text style={{
+                 color: '#fff',
+                 fontSize: height / 27,
+                 width: width,
+                 position: 'absolute',
+                 textAlign: 'center'
+             }}>
+                 {MagnetometerUtils.getDegree(magnetometer)}°
+             </Text>
 
-        <Text variant="bodyLarge">
-          {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
-        </Text>
+             <Col style={{ alignItems: 'center' }}>
+                 <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
+                     <View style={{height: height / 30, width: 4, backgroundColor: "black"}}/>
+                 </View>
+                 <Image source={require("../../assets/images/compass_bg.png")} style={{
+                     height: width - 80,
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                     resizeMode: 'contain',
+                     transform: [{ rotate: 360 - magnetometer + 'deg' }]
+                 }} />
 
-        <Text variant="bodyLarge">
-          Síla signálu: {latestData?.newSignalAvg}
-        </Text>
-      </ScrollView>
-
-      <Text variant="bodyLarge">{aaa}</Text>
-
-      <Row style={{ alignItems: "center" }} size={0.1}>
-        <Col style={{ alignItems: "center" }}>
-          <View
-            style={{
-              position: "absolute",
-              width: width,
-              alignItems: "center",
-              top: 0,
-            }}
-          >
-            <Image
-              source={require("../../assets/images/compass_pointer.png")}
-              style={{
-                height: height / 26,
-                resizeMode: "contain",
-              }}
-            />
-          </View>
-        </Col>
-      </Row>
-
-      <Row style={{ alignItems: "center" }} size={2}>
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: height / 27,
-            width: width,
-            position: "absolute",
-            textAlign: "center",
-          }}
-        >
-          {MagnetometerUtils.getDegree(magnetometer)}°
-        </Text>
-
-        <Col style={{ alignItems: "center" }}>
-          <Image
-            source={require("../../assets/images/compass_bg.png")}
-            style={{
-              height: width - 80,
-              justifyContent: "center",
-              alignItems: "center",
-              resizeMode: "contain",
-              transform: [{ rotate: 360 - magnetometer + "deg" }],
-            }}
-          />
-        </Col>
-      </Row>
-
-      <Row style={{ alignItems: "center" }} size={1}></Row>
-    </Grid>
+             </Col>
+         </Row>
+        <View style={{alignItems: "center", padding: 20}}>
+            <Text variant="headlineMedium">
+                Přibližná vzdálenost: {latestData?.distance}
+            </Text>
+        </View>
+         <View style={{alignItems: "center", padding: 20}}>
+             <Text variant="headlineMedium">
+                 Síla signálu: {latestData?.newSignalAvg}
+             </Text>
+             <Text variant="headlineSmall">
+                 {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
+             </Text>
+         </View>
+      </Grid>
   );
 }

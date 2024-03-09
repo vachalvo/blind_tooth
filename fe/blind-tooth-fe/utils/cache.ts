@@ -2,6 +2,7 @@ export type ResponseData = {
   newSignalAvg: number;
   oldSignalAvg: number;
   angle: number;
+    distance: number;
 
   lastItem?: {
     created: number;
@@ -12,6 +13,7 @@ let cache: ResponseData = {
   newSignalAvg: 0,
   oldSignalAvg: 0,
   angle: 0,
+    distance: 0,
 
   lastItem: {
     created: 0,
