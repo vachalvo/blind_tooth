@@ -68,7 +68,6 @@ function RootLayoutNav() {
             name="vibrations"
             options={{ title: "Zvuk a vibrace" }}
           />
-          <Stack.Screen name="findMe" options={{ title: "Sdílet polohu" }} />
         </Stack>
       </ThemeProvider>
     </PaperProvider>
