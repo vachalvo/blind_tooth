@@ -29,9 +29,9 @@ export default function App() {
         const body = {
             userId: text
         };
-        const res = await Calls.post("users", body)
+        const res = await Calls.post("https://rz4v35jq20.execute-api.eu-west-1.amazonaws.com/default/postUser", body)
         if(res.status === 200) {
-            setItem(text)
+            await setItem(text)
             router.replace("/(tabs)")
             setLoading(false)
             return;
