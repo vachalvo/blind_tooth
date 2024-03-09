@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl =
-  "https://v6qwxr6iml.execute-api.eu-west-1.amazonaws.com/default/ingestCompassNjs2";
+  "https://qd25mzh8u1.execute-api.eu-west-1.amazonaws.com/default/restApi/";
 
 const Calls = {
   post: <T extends object>(endpoint: string, body: T) => {
