@@ -172,7 +172,7 @@ export default function TabOneScreen() {
           textColor={Colors.dark.background}
           labelStyle={{ color: Colors.dark.background, fontSize: 20 }}
         >
-          Najdi mě
+          Sdílet polohu
         </Button>
       </Link>
     </View>

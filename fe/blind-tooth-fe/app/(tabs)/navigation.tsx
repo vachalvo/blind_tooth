@@ -197,7 +197,7 @@ export default function App() {
     MagnetometerUtils.getDegree(magnetometer),
     latestData?.angle ?? 0
   );
-    console.log(latestData)
+
   return (
      <Grid style={{backgroundColor: Colors.navigation.background}}>
          <Row style={{ alignItems: 'center' }} size={2}>
