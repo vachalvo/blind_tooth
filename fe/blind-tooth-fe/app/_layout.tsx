@@ -58,7 +58,8 @@ function RootLayoutNav() {
         <Stack initialRouteName="register">
           <Stack.Screen
             name="register"
-            options={{ title: "Registrace", headerShown: false }} />
+            options={{ title: "Registrace", headerShown: false }}
+          />
           <Stack.Screen
             name="(tabs)"
             options={{ title: "Domů", headerShown: false }}
@@ -67,6 +68,7 @@ function RootLayoutNav() {
             name="vibrations"
             options={{ title: "Zvuk a vibrace" }}
           />
+          <Stack.Screen name="findMe" options={{ title: "Najdi mě" }} />
         </Stack>
       </ThemeProvider>
     </PaperProvider>

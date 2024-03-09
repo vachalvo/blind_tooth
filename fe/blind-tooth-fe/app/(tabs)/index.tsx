@@ -157,7 +157,25 @@ export default function TabOneScreen() {
                     Hledej
                 </Button>
             </Link>
-        </View>
+    
+      <Link href="/findMe">
+        <Button
+          style={{
+            backgroundColor: Colors.navigation.background,
+            height: 80,
+            width: 200,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          textColor={Colors.dark.background}
+          labelStyle={{ color: Colors.dark.background, fontSize: 20 }}
+        >
+          Najdi mě
+        </Button>
+      </Link>
+    </View>
     );
 }
 

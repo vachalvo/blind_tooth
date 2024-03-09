@@ -121,7 +121,7 @@ export default function App() {
           {
             params: {
               // TODO, tady musi byt kamarad
-              userId: userId,
+              userId: "David",
             },
             headers: {
               ["logged-user-id"]: userId,
