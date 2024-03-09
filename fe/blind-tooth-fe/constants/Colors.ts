@@ -28,4 +28,6 @@ export default {
     background: "#FFFFFF",
     color: "black"
   },
+
+  header: { background: "#353531", color: "white" },
 };

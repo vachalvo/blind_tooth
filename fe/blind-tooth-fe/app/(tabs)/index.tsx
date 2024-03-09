@@ -112,7 +112,7 @@ export default function TabOneScreen() {
                     <Button
                         style={{
                             ...styles.buttonBase, ...{
-                                backgroundColor: Colors.dark.background,
+                                backgroundColor: Colors.light.background,
                             }
                         }}
                         textColor={Colors.light.background}
@@ -158,7 +158,7 @@ export default function TabOneScreen() {
                 </Button>
             </Link>
 
-      <Link href="/findMe">
+      <Link href="/findMe" style={{marginTop: 10}}>
         <Button
           style={{
             backgroundColor: Colors.navigation.background,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#353531"
+        backgroundColor: "#151514",
     },
     title: {
         fontSize: 20,
