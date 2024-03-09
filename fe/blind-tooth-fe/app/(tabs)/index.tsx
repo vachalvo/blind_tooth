@@ -9,6 +9,7 @@ import * as NetInfo from "@react-native-community/netinfo";
 import { Button, Surface, Text } from "react-native-paper";
 import { Link } from "expo-router";
 import Colors from "@/constants/Colors";
+import Calls from "@/app/api";
 
 export default function TabOneScreen() {
   const [netInfo, setNetInfo] = useState<unknown>();
@@ -29,6 +30,23 @@ export default function TabOneScreen() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const getTest = async () => {
+      const res = await Calls.get("", {userId: "Martin"} )
+
+      console.log(res.data)
+
+      const ressss = await  Calls.post("", {
+          "userId": "Martin",
+          "compass": 180,
+          "gps": {
+              "longtitude": 13.3,
+              "latitude": 12.2,
+              "atltitude": 50.3
+          },
+          "wifiSignalStrength": null
+      })
+  }
 
   return (
     <View style={styles.container}>
@@ -53,10 +71,11 @@ export default function TabOneScreen() {
         >
           <Button
             style={{
-              backgroundColor: "red",
+              backgroundColor: "blue",
             }}
+            onPress={() => getTest()}
           >
-            TODO
+            Axios Test
           </Button>
 
           <Button
