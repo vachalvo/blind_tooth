@@ -13,7 +13,6 @@ import {REGISTRATION_KEY} from "@/app/register";
 
 export default function TabOneScreen() {
     const [netInfo, setNetInfo] = useState<unknown>();
-    const [count, setCount] = useState(0);
     const {getItem} = useAsyncStorage(REGISTRATION_KEY);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState<string | null>(null);
@@ -33,149 +32,70 @@ export default function TabOneScreen() {
 
     return (
         <View style={styles.container}>
-            <Surface
-                mode="flat"
-                elevation={0}
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: 8,
-                }}
-            >
-
-                <Surface
-                    elevation={0}
-                    mode="flat"
-                    style={{
-                        display: "flex",
-                        gap: 12,
-                        flexGrow: 1,
-                        paddingLeft: 10
-                    }}
-                >
-
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.share.background,
-                            }
-                        }}
-                        textColor={Colors.share.color}
-                    >
-                        Sdílet kontakt
-                    </Button>
-
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.contacts.background,
-                            }
-                        }}
-                        textColor={Colors.contacts.color}
-                    >
-                        Kontakty
-                    </Button>
-
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.contacts.background,
-                            }
-                        }}
-                        textColor={Colors.contacts.color}
-                    >
-                        Přidat kontakt
-                    </Button>
-                </Surface>
-
-                <Surface
-                    elevation={0}
-                    mode="flat"
-                    style={{
-                        display: "flex",
-                        gap: 12,
-                        flexGrow: 1,
-                        paddingRight: 10
-                    }}
-                >
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.vibrations.background,
-                            }
-                        }}
-                        textColor={Colors.vibrations.color}
-                    >
-                        Nastavení
-                    </Button>
-
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.light.background,
-                            }
-                        }}
-                        textColor={Colors.light.background}
-                    >
-                        TODO
-                    </Button>
-
-                    <Button
-                        style={{
-                            ...styles.buttonBase, ...{
-                                backgroundColor: Colors.navigation.background
-                            }
-                        }}
-                    >
-                        STOP
-                    </Button>
-                </Surface>
-            </Surface>
-
             {(netInfo as any) && (
                 <Text>{JSON.stringify(netInfo as any, null, 2)}</Text>
             )}
-
-            {count > 0 && <Text>{count}</Text>}
 
             <View style={{height: 30}}/>
 
             <Link href="/(tabs)/contacts">
                 <Button
                     style={{
-                        backgroundColor: Colors.navigation.background,
+                        backgroundColor: Colors.contacts.background,
                         height: 100,
-                        width: 200,
+                        width: 300,
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "center",
                         alignItems: "center",
                     }}
-                    textColor={Colors.navigation.color}
+                    textColor={Colors.contacts.color}
                     labelStyle={{color: Colors.dark.background, fontSize: 20}}
                 >
                     Hledej
                 </Button>
             </Link>
 
-      <Link href="/findMe" style={{marginTop: 10}}>
-        <Button
-          style={{
-            backgroundColor: Colors.navigation.background,
-            height: 80,
-            width: 200,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          textColor={Colors.dark.background}
-          labelStyle={{ color: Colors.dark.background, fontSize: 20 }}
-        >
-          Sdílet polohu
-        </Button>
-      </Link>
-    </View>
+            <View style={{height: 30}}/>
+
+            <Link href="/findMe" >
+                <Button
+                  style={{
+                    backgroundColor: Colors.navigation.background,
+                    height: 100,
+                    width: 300,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  textColor={Colors.navigation.color}
+                  labelStyle={{ color: Colors.dark.background, fontSize: 20 }}
+                >
+                    Sdílet polohu
+                </Button>
+            </Link>
+
+            <View style={{height: 30}}/>
+
+            <Link href="/(tabs)/contacts">
+                <Button
+                    style={{
+                        backgroundColor: Colors.settings.background,
+                        height: 100,
+                        width: 300,
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                    textColor={Colors.settings.color}
+                    labelStyle={{color: Colors.dark.background, fontSize: 20}}
+                >
+                    Nastavení
+                </Button>
+            </Link>
+        </View>
     );
 }
 

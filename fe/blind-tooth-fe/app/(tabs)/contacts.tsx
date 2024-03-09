@@ -8,6 +8,7 @@ import {ResponseData} from "@/utils/cache";
 import {useAsyncStorage} from "@react-native-async-storage/async-storage";
 import {REGISTRATION_KEY} from "@/app/register";
 import {useRouter} from "expo-router";
+import Colors from "@/constants/Colors";
 
 type userId = {
   userId: string
@@ -53,7 +54,7 @@ export default function App() {
 
   function navigateToNavigation(userId: string) {
     router.push({
-      pathname: "/(tabs)/navigation",
+      pathname: "/navigation",
       params: {
         friendUserId: userId
       },
@@ -72,13 +73,14 @@ export default function App() {
 
     <ScrollView >
       {contacts.map((contact) => <Surface key={contact.userId} style={styles.surface} elevation={4}>
-        <Button icon="phone" mode="contained" onPress={() => console.log('Calling'+ contact)}>
+        <Button style={{backgroundColor: Colors.contacts.background}} labelStyle={{color: Colors.contacts.color}}  icon="phone" mode="contained" onPress={() => console.log('Calling'+ contact)}>
           Volat
         </Button>
         <Text style={styles.text}>
         {contact.userId}
         </Text>
         <Button
+            style={{backgroundColor: Colors.navigation.background}} labelStyle={{color: Colors.navigation.color}}
             icon="human-greeting-proximity" mode="contained" onPress={() =>navigateToNavigation(contact.userId)}
                 contentStyle={{flexDirection: 'row-reverse'}}
         >

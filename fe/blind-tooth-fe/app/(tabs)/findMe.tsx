@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import Calls from "@/utils/api/client";
 import { Redirect } from "expo-router";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
-import { REGISTRATION_KEY } from "./register";
+import { REGISTRATION_KEY } from "../register";
 import {View} from "react-native";
 
 export default function FindMePage() {

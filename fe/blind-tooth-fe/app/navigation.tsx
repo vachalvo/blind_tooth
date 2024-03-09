@@ -10,7 +10,7 @@ import { Text } from "react-native-paper";
 import { vibrateLong, vibrateShort } from "@/utils/vibrations";
 import { ResponseData, useCache } from "@/utils/cache";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
-import { REGISTRATION_KEY } from "../register";
+import { REGISTRATION_KEY } from "./register";
 import {Redirect, useLocalSearchParams, useRouter} from "expo-router";
 import MagnetometerUtils from "@/utils/magnetometerUtils";
 import Colors from "@/constants/Colors";
@@ -216,7 +216,7 @@ export default function App() {
                  <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
                      <View style={{height: height / 30, width: 4, backgroundColor: "black"}}/>
                  </View>
-                 <Image source={require("../../assets/images/compass_bg.png")} style={{
+                 <Image source={require("../assets/images/compass_bg.png")} style={{
                      height: width - 80,
                      justifyContent: 'center',
                      alignItems: 'center',

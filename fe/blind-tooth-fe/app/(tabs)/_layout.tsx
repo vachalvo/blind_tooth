@@ -42,9 +42,9 @@ const CustomHeader = () => {
         }}>
             <View><Text style={{color: "white"}}>Stav</Text></View>
 
-            <View style={{flexDirection: "row", gap: 5}}>
-                <Button style={{backgroundColor: soundsMode === "on" ? "green" : "red"}} onPress={onSoundClicked}>Zvuk</Button>
-                <Button style={{backgroundColor: vibrationsMode === "off" ? "red" : "green"}} onPress={onVibrationsClicked}>Vibrace</Button></View>
+            <View style={{flexDirection: "row", gap: 10, marginTop: 15}}>
+                <Button style={{backgroundColor: soundsMode === "on" ? Colors.on.background : Colors.off.background}} icon={soundsMode === "on" ? 'volume-high' : 'volume-mute' } onPress={onSoundClicked}>Zvuk</Button>
+                <Button style={{backgroundColor: vibrationsMode === "off" ? Colors.off.background : Colors.on.background}} icon={vibrationsMode === "off" ? 'cellphone' : 'vibrate'} onPress={onVibrationsClicked}>Vibrace</Button></View>
         </View>
     );
 };
@@ -56,7 +56,6 @@ export default function TabLayout() {
             <Tabs
                 screenOptions={{
                     tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-
                     // Disable the static render of the header on web
                     // to prevent a hydration error in React Navigation v6.
                     headerShown: useClientOnlyValue(false, true),
@@ -66,23 +65,24 @@ export default function TabLayout() {
                     name="index"
                     options={{
                         headerShown: true,
+                        tabBarIcon: ({color}) => <TabBarIcon name="home" color={color}/>,
                         header: () => <CustomHeader/>,
                         unmountOnBlur: true
                     }}
                 />
                 <Tabs.Screen
-                    name="navigation"
+                    name="findMe"
                     options={{
-                        title: "Navigace",
-                        tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                        title: "Sdílet",
+                        tabBarIcon: ({color}) => <TabBarIcon name="map-marker" color={color}/>,
                         unmountOnBlur: true,
                     }}
                 />
                 <Tabs.Screen
                     name="contacts"
                     options={{
-                        title: "Kontakty",
-                        tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                        title: "Hledat",
+                        tabBarIcon: ({color}) => <TabBarIcon name="phone" color={color}/>,
                     }}
                 />
             </Tabs></>
