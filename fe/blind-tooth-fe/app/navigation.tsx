@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Image, View, Dimensions, ScrollView } from "react-native";
 import { Grid, Col, Row } from "react-native-easy-grid";
 import { Magnetometer } from "expo-sensors";
@@ -6,19 +6,22 @@ import { Magnetometer } from "expo-sensors";
 import * as NetInfo from "@react-native-community/netinfo";
 import Calls from "@/utils/api/client";
 import * as Location from "expo-location";
-import { Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { vibrateLong, vibrateShort } from "@/utils/vibrations";
 import { ResponseData, useCache } from "@/utils/cache";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { REGISTRATION_KEY } from "./register";
-import {Redirect, useLocalSearchParams, useRouter} from "expo-router";
+import { Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import MagnetometerUtils from "@/utils/magnetometerUtils";
 import Colors from "@/constants/Colors";
+import { Audio } from "@/components/audio";
 
 const { height, width } = Dimensions.get("window");
 
+let globalMagnometer = 0;
+
 export default function App() {
-    const {friendUserId} = useLocalSearchParams<{ friendUserId?: string }>()
+  const { friendUserId } = useLocalSearchParams<{ friendUserId?: string }>();
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [latestData, setLatestData] = useState<ResponseData>();
@@ -52,19 +55,6 @@ export default function App() {
       }
 
       setLatestData(latestData);
-
-      const value = latestData.newSignalAvg;
-      // if (!value || value < 39) {
-      //   vibrateShort();
-      //   return;
-      // }
-
-      // if (value < 69) {
-      //   vibrateMedium();
-      //   return;
-      // }
-
-      // vibrateLong();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -80,7 +70,7 @@ export default function App() {
       NetInfo.refresh()
         .then((state) => {
           console.log(
-            "posilam data",
+            "posilam tablet data",
             state.type === "wifi" ? state.details.strength : null
           );
 
@@ -140,7 +130,7 @@ export default function App() {
       const { data } = response;
       console.log(data);
       cache.storeData(data);
-      setLatestData(data);
+      // setLatestData(data);
     }, 750);
 
     return () => clearInterval(interval);
@@ -161,7 +151,8 @@ export default function App() {
   const _subscribe = () => {
     setSubscription(
       Magnetometer.addListener((data) => {
-        setMagnetometer(MagnetometerUtils.getAngle(data));
+        globalMagnometer = MagnetometerUtils.getAngle(data);
+        // setMagnetometer(MagnetometerUtils.getAngle(data));
       })
     );
   };
@@ -177,6 +168,30 @@ export default function App() {
     return () => _unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const aaa = MagnetometerUtils.getDirectionLevel(
+        MagnetometerUtils.getDegree(globalMagnometer),
+        latestData?.angle ?? 0
+      );
+      if (aaa === 0) {
+        Audio.Ok_way();
+      } else if (aaa === 1) {
+        Audio.Bad_Left_1();
+      } else if (aaa === 2) {
+        Audio.Bad_Left_2();
+      } else if (aaa === -1) {
+        Audio.Bad_Right_1();
+      } else if (aaa === -2) {
+        Audio.Bad_Right_2();
+      } else {
+        Audio.Wrong_way();
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   if (loading) return <Text>Loading...</Text>;
 
   if (userId === null) return <Redirect href={"/register"} />;
@@ -186,18 +201,13 @@ export default function App() {
       ? "good"
       : "bad";
 
-  if (direction === "good") {
-    vibrateShort();
-  }
+  // if (direction === "good") {
+  //   vibrateShort();
+  // }
 
-  if (direction === "bad") {
-    vibrateLong();
-  }
-
-  const aaa = MagnetometerUtils.getDirectionLevel(
-    MagnetometerUtils.getDegree(magnetometer),
-    latestData?.angle ?? 0
-  );
+  // if (direction === "bad") {
+  //   vibrateLong();
+  // }
 
   return (
      <Grid style={{backgroundColor: Colors.navigation.background}}>

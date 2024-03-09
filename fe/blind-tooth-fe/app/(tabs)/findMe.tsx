@@ -8,7 +8,7 @@ import Calls from "@/utils/api/client";
 import { Redirect } from "expo-router";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { REGISTRATION_KEY } from "../register";
-import {View} from "react-native";
+import { View } from "react-native";
 
 export default function FindMePage() {
   const [userId, setUserId] = useState<string | null>(null);
@@ -20,6 +20,12 @@ export default function FindMePage() {
       setUserId(res);
       setLoading(false);
     });
+  }, []);
+
+  useEffect(() => {
+    Location.requestForegroundPermissionsAsync().catch((err) =>
+      console.error(err)
+    );
   }, []);
 
   useEffect(() => {
@@ -69,17 +75,22 @@ export default function FindMePage() {
 
   return (
     <Container>
-        <View style={{alignItems: "center"}}>
-            <View style={{flex: 1}} />
+      <View style={{ alignItems: "center" }}>
+        <View style={{ flex: 1 }} />
 
-            <Text style={{textAlign: "center"}} variant="headlineMedium" >Odesíláš data svému kamarádovi.</Text>
+        <Text style={{ textAlign: "center" }} variant="headlineMedium">
+          Odesíláš data svému kamarádovi.
+        </Text>
 
-            <Text style={{textAlign: "center"}} variant="headlineMedium" >Počkej až tě najde.</Text>
-            <View style={{flex: 1}} />
-            <Text style={{textAlign: "center"}} variant="headlineMedium" >Buď trpělivý :)</Text>
-            <View style={{flex: 1}} />
-
-        </View>
+        <Text style={{ textAlign: "center" }} variant="headlineMedium">
+          Počkej až tě najde.
+        </Text>
+        <View style={{ flex: 1 }} />
+        <Text style={{ textAlign: "center" }} variant="headlineMedium">
+          Buď trpělivý :)
+        </Text>
+        <View style={{ flex: 1 }} />
+      </View>
     </Container>
   );
 }

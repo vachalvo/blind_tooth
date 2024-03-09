@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 export type ResponseData = {
   newSignalAvg: number;
   oldSignalAvg: number;
@@ -37,5 +39,5 @@ export function useCache() {
     return !cache.lastItem?.created;
   }
 
-  return { storeData, getData, isStale, isEmpty };
+  return useMemo(() => ({ storeData, getData, isStale, isEmpty }), []);
 }
