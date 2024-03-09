@@ -56,7 +56,14 @@ function RootLayoutNav() {
     <PaperProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(tabs)"
+            options={{ title: "Domů", headerShown: false }}
+          />
+          <Stack.Screen
+            name="vibrations"
+            options={{ title: "Zvuk a vibrace" }}
+          />
         </Stack>
       </ThemeProvider>
     </PaperProvider>
