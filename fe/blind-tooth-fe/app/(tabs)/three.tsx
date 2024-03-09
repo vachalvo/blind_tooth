@@ -4,6 +4,7 @@ import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 
 import {Accelerometer} from "expo-sensors";
+import {Button} from "react-native-paper";
 
 export default function App() {
     const [{ x, y, z }, setData] = useState({
@@ -36,6 +37,7 @@ export default function App() {
             <Text style={styles.text}>x: {x}</Text>
             <Text style={styles.text}>y: {y}</Text>
             <Text style={styles.text}>z: {z}</Text>
+            <Button>Custom buttons</Button>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
                     <Text>{subscription ? 'On' : 'Off'}</Text>
