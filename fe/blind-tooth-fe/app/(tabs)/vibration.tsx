@@ -115,6 +115,31 @@ export default function App() {
           <Text>short3</Text>
         </TouchableOpacity>
       </View>
+
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Audio.Ok_way()} style={styles.button}>
+          <Text>OK</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.Wrong_way()} style={styles.button}>
+          <Text>Wrog</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Audio.Bad_Left_1()} style={styles.button}>
+          <Text>Left1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.Bad_Left_2()} style={styles.button}>
+          <Text>Left2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.Bad_Right_1()} style={styles.button}>
+          <Text>Right1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.Bad_Right_2()} style={styles.button}>
+          <Text>Right2</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
