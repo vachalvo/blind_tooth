@@ -49,13 +49,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="debug"
-        options={{
-          title: "Debug",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="gps"
         options={{
           title: "GPS",
