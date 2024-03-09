@@ -1,6 +1,8 @@
 export type ResponseData = {
   newSignalAvg: number;
   oldSignalAvg: number;
+  angle: number;
+
   lastItem?: {
     created: number;
   };
@@ -9,6 +11,8 @@ export type ResponseData = {
 let cache: ResponseData = {
   newSignalAvg: 0,
   oldSignalAvg: 0,
+  angle: 0,
+
   lastItem: {
     created: 0,
   },

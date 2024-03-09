@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-    Image,
-    View,
-    Dimensions, ScrollView,
-} from "react-native";
+import { Image, View, Dimensions, ScrollView } from "react-native";
 import { Grid, Col, Row } from "react-native-easy-grid";
 import { Magnetometer } from "expo-sensors";
 
@@ -148,36 +144,36 @@ export default function App() {
     return () => clearInterval(interval);
   }, [userId, cache, setLatestData]);
 
-    const [subscription, setSubscription] = useState<any>(null);
-    const [magnetometer, setMagnetometer] = useState<any>(0);
+  const [subscription, setSubscription] = useState<any>(null);
+  const [magnetometer, setMagnetometer] = useState<any>(0);
 
   useEffect(() => {
-      Magnetometer.setUpdateInterval(1000)
+    Magnetometer.setUpdateInterval(1000);
 
-      getItem().then((res) => {
+    getItem().then((res) => {
       setUserId(res);
       setLoading(false);
     });
   }, []);
 
-    const _subscribe = () => {
-        setSubscription(
-            Magnetometer.addListener((data) => {
-                setMagnetometer(MagnetometerUtils.getAngle(data));
-            })
-        );
-    };
+  const _subscribe = () => {
+    setSubscription(
+      Magnetometer.addListener((data) => {
+        setMagnetometer(MagnetometerUtils.getAngle(data));
+      })
+    );
+  };
 
-    const _unsubscribe = () => {
-        subscription && subscription.remove();
-        setSubscription(null);
-    };
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(null);
+  };
 
-    useEffect(() => {
-        _subscribe();
+  useEffect(() => {
+    _subscribe();
 
-        return () => _unsubscribe();
-    }, []);
+    return () => _unsubscribe();
+  }, []);
 
   if (loading) return <Text>Loading...</Text>;
 
@@ -196,56 +192,76 @@ export default function App() {
     vibrateLong();
   }
 
+  const aaa = MagnetometerUtils.getDirectionLevel(
+    MagnetometerUtils.getDegree(magnetometer),
+    latestData?.angle ?? 0
+  );
+
   return (
-     <Grid style={{backgroundColor: "yellow"}}>
-         <ScrollView>
-             <Text variant="bodySmall">{JSON.stringify(latestData)}</Text>
+    <Grid style={{ backgroundColor: "yellow" }}>
+      <ScrollView>
+        <Text variant="bodySmall">{JSON.stringify(latestData)}</Text>
 
-             <Text variant="bodyLarge">
-                 {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
-             </Text>
+        <Text variant="bodyLarge">
+          {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
+        </Text>
 
-             <Text variant="bodyLarge">
-                 Síla signálu: {latestData?.newSignalAvg}
-             </Text>
-         </ScrollView>
+        <Text variant="bodyLarge">
+          Síla signálu: {latestData?.newSignalAvg}
+        </Text>
+      </ScrollView>
 
-         <Row style={{ alignItems: 'center' }} size={.1}>
-             <Col style={{ alignItems: 'center' }}>
-                 <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
-                     <Image source={require("../../assets/images/compass_pointer.png")} style={{
-                         height: height / 26,
-                         resizeMode: 'contain'
-                     }} />
-                 </View>
-             </Col>
-         </Row>
+      <Text variant="bodyLarge">{aaa}</Text>
 
-         <Row style={{ alignItems: 'center' }} size={2}>
-             <Text style={{
-                 color: '#fff',
-                 fontSize: height / 27,
-                 width: width,
-                 position: 'absolute',
-                 textAlign: 'center'
-             }}>
-                 {MagnetometerUtils.getDegree(magnetometer)}°
-             </Text>
+      <Row style={{ alignItems: "center" }} size={0.1}>
+        <Col style={{ alignItems: "center" }}>
+          <View
+            style={{
+              position: "absolute",
+              width: width,
+              alignItems: "center",
+              top: 0,
+            }}
+          >
+            <Image
+              source={require("../../assets/images/compass_pointer.png")}
+              style={{
+                height: height / 26,
+                resizeMode: "contain",
+              }}
+            />
+          </View>
+        </Col>
+      </Row>
 
-             <Col style={{ alignItems: 'center' }}>
+      <Row style={{ alignItems: "center" }} size={2}>
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: height / 27,
+            width: width,
+            position: "absolute",
+            textAlign: "center",
+          }}
+        >
+          {MagnetometerUtils.getDegree(magnetometer)}°
+        </Text>
 
-                 <Image source={require("../../assets/images/compass_bg.png")} style={{
-                     height: width - 80,
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                     resizeMode: 'contain',
-                     transform: [{ rotate: 360 - magnetometer + 'deg' }]
-                 }} />
+        <Col style={{ alignItems: "center" }}>
+          <Image
+            source={require("../../assets/images/compass_bg.png")}
+            style={{
+              height: width - 80,
+              justifyContent: "center",
+              alignItems: "center",
+              resizeMode: "contain",
+              transform: [{ rotate: 360 - magnetometer + "deg" }],
+            }}
+          />
+        </Col>
+      </Row>
 
-             </Col>
-         </Row>
-
-        <Row style={{alignItems: "center"}} size={1}></Row>
-      </Grid>
+      <Row style={{ alignItems: "center" }} size={1}></Row>
+    </Grid>
   );
 }
