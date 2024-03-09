@@ -203,7 +203,7 @@ export default function App() {
      <Grid style={{backgroundColor: Colors.navigation.background}}>
          <Row style={{ alignItems: 'center' }} size={2}>
              <Text style={{
-                 color: '#fff',
+                 color: Colors.navigation.color,
                  fontSize: height / 27,
                  width: width,
                  position: 'absolute',
@@ -227,15 +227,15 @@ export default function App() {
              </Col>
          </Row>
         <View style={{alignItems: "center", padding: 20}}>
-            <Text variant="headlineMedium">
+            <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
                 Přibližná vzdálenost: {latestData?.distance}
             </Text>
         </View>
          <View style={{alignItems: "center", padding: 20}}>
-             <Text variant="headlineMedium">
+             <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
                  Síla signálu: {latestData?.newSignalAvg}
              </Text>
-             <Text variant="headlineSmall">
+             <Text variant="headlineSmall" style={{color: Colors.navigation.color}}>
                  {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
              </Text>
          </View>
