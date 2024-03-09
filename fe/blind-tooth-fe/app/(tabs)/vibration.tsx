@@ -97,6 +97,15 @@ export default function App() {
         <TouchableOpacity onPress={() => Audio.Beep()} style={styles.button}>
           <Text>beep</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(2)} style={styles.button}>
+          <Text>beep2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(2, 1000)} style={styles.button}>
+          <Text>beep2-</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Audio.BeepSeqence(4, -1500)} style={styles.button}>
+          <Text>beep4</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
