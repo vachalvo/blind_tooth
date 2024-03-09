@@ -9,21 +9,14 @@ export function useSoundsMode() {
   const { getItem, setItem } = useAsyncStorage(SOUND_MODE_KEY);
   const [soundsMode, setSoundsMode] = useState<SoundMode | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      const value = await getItem();
-      setSoundsMode((value as SoundMode) ?? "off");
-    })();
-  }, [getItem]);
-
   async function storeSoundsMode(value: SoundMode) {
     try {
       await setItem(value);
-      storeSoundsMode(value);
+      setSoundsMode(value);
     } catch (e) {
       console.error(e);
     }
   }
 
-  return { soundsMode, storeSoundsMode };
+    return { soundsMode, storeSoundsMode };
 }
