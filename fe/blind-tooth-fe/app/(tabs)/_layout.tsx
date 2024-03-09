@@ -32,6 +32,7 @@ export default function TabLayout() {
         options={{
           title: "Domů",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          unmountOnBlur: true,
         }}
       />
       <Tabs.Screen
@@ -39,6 +40,7 @@ export default function TabLayout() {
         options={{
           title: "Navigace",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          unmountOnBlur: true,
         }}
       />
       <Tabs.Screen

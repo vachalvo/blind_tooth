@@ -15,18 +15,22 @@ import * as Location from "expo-location";
 import { Container } from "@/components/Container";
 import { Text } from "react-native-paper";
 import { vibrateLong, vibrateMedium, vibrateShort } from "@/utils/vibrations";
+import { ResponseData, useCache } from "@/utils/cache";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import { REGISTRATION_KEY } from "../register";
+import { Redirect } from "expo-router";
 
 const { height, width } = Dimensions.get("window");
 
-type ResponseData = {
-  wifiSignalStrength: number | null;
-  userId: string;
-  [key: string]: any;
-};
-
 export default function App() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [latestData, setLatestData] = useState<ResponseData[]>([]);
+  const [latestData, setLatestData] = useState<ResponseData>();
+  const { getItem } = useAsyncStorage(REGISTRATION_KEY);
+
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const cache = useCache();
 
   useEffect(() => {
     (async () => {
@@ -40,19 +44,52 @@ export default function App() {
 
   useEffect(() => {
     const interval = setInterval(async () => {
+      const latestData = cache.getData();
+      if (cache.isEmpty(latestData)) {
+        return;
+      }
+
+      if (cache.isStale(latestData)) {
+        alert("Data is stale");
+        return;
+      }
+
+      setLatestData(latestData);
+
+      const value = latestData.newSignalAvg;
+      // if (!value || value < 39) {
+      //   vibrateShort();
+      //   return;
+      // }
+
+      // if (value < 69) {
+      //   vibrateMedium();
+      //   return;
+      // }
+
+      // vibrateLong();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [cache]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (!userId) {
+        return;
+      }
+
       const location = await Location.getCurrentPositionAsync({});
       NetInfo.refresh()
         .then((state) => {
-          // console.log("Connection type", state.type);
-          // console.log("Is connected?", state.isConnected);
-          // console.log(state.details);
-
           console.log(
             "posilam data",
             state.type === "wifi" ? state.details.strength : null
           );
-          Calls.post("", {
-            userId: "Martin",
+
+          console.log(userId);
+          Calls.post("data", {
+            userId: userId,
             compass: 180,
             gps: {
               longtitude: location.coords.longitude,
@@ -62,22 +99,28 @@ export default function App() {
             },
             wifiSignalStrength:
               state.type === "wifi" ? state.details.strength : null,
-          });
-
-          // setNetInfo(() => state);
-          // setCount((prev) => prev + 1);
+          }).catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
-    }, 1000);
+    }, 250);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const response = await Calls.get<ResponseData[]>("", {
-        userId: "Martin",
-      });
+      let response;
+      try {
+        response = await Calls.get<ResponseData>("data", {
+          // TODO, tady musi byt kamarad
+          userId: userId,
+          loggedUserId: userId,
+        });
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+
       console.log("dostal jsem data");
       if (response.status !== 200) {
         console.log("Error fetching data");
@@ -85,32 +128,27 @@ export default function App() {
       }
 
       const { data } = response;
-
-      // console.log(data);
-
-      const sortedData = data.sort((a, b) => a.timestamp - b.timestamp);
-
-      const value = sortedData.at(-1)?.wifiSignalStrength;
-      setLatestData(data.slice(-1));
-
-      if (!value || value < 39) {
-        vibrateShort();
-        return;
-      }
-
-      if (value < 69) {
-        vibrateMedium();
-        return;
-      }
-
-      vibrateLong();
-    }, 1500);
+      console.log(data);
+      cache.storeData(data);
+      setLatestData(data);
+    }, 750);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [userId, cache, setLatestData]);
 
   const [magnetometer, setMagnetometer] = useState(0);
   const [subscription, setSubscription] = useState<any>(null);
+
+  useEffect(() => {
+    getItem().then((res) => {
+      setUserId(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <Text>Loading...</Text>;
+
+  if (userId === null) return <Redirect href={"/register"} />;
 
   const _slow = () => Magnetometer.setUpdateInterval(1000);
   const _fast = () => Magnetometer.setUpdateInterval(10000);
@@ -188,10 +226,31 @@ export default function App() {
   //   return magnetometer - 90 >= 0 ? magnetometer - 90 : magnetometer + 271;
   // };
 
+  const direction =
+    (latestData?.newSignalAvg ?? 0) - (latestData?.oldSignalAvg ?? 0) >= 0
+      ? "good"
+      : "bad";
+
+  if (direction === "good") {
+    vibrateShort();
+  }
+
+  if (direction === "bad") {
+    vibrateLong();
+  }
+
   return (
     <Container>
       <ScrollView>
         <Text variant="bodySmall">{JSON.stringify(latestData)}</Text>
+
+        <Text variant="bodyLarge">
+          {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
+        </Text>
+
+        <Text variant="bodyLarge">
+          Síla signálu: {latestData?.newSignalAvg}
+        </Text>
       </ScrollView>
     </Container>
     // <Grid style={{ backgroundColor: "black" }}>
