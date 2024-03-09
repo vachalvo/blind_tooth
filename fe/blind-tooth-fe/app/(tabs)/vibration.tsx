@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, Vibration } from "react-native";
 
 import { Text, View } from "@/components/Themed";
+import { Audio } from "@/components/audio";
 
 export default function App() {
   const pattern_sym_short_one_shot: number[] = [80, 80];
@@ -89,6 +90,12 @@ export default function App() {
           style={styles.button}
         >
           <Text>long3</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Audio.Beep()} style={styles.button}>
+          <Text>beep</Text>
         </TouchableOpacity>
       </View>
     </View>
