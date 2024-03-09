@@ -66,7 +66,7 @@ export default function TabOneScreen() {
                     setStrenghtChartData((prev) => {
                         const newData = [...prev]; // Create a copy of the current data array
                         newData.shift(); // Remove the first element
-                        return [...newData, state.details.strenght ?? -1]
+                        return [...newData, state.details.strength ?? -1]
                     }); // Update the state with the new data
                 })
                 .catch((err) => console.error(err));
