@@ -31,7 +31,7 @@ export default function App() {
         };
         const res = await Calls.post("users", body)
         if(res.status === 200) {
-            setItem(JSON.stringify(body))
+            setItem(text)
             router.replace("/(tabs)")
             setLoading(false)
             return;
