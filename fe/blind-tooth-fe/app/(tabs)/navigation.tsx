@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {Image, View, Text, Dimensions, TouchableOpacity} from 'react-native';
-import { Grid, Col, Row } from 'react-native-easy-grid';
-import { Magnetometer } from 'expo-sensors';
+import { useState, useEffect } from "react";
+import { Image, View, Text, Dimensions, TouchableOpacity } from "react-native";
+import { Grid, Col, Row } from "react-native-easy-grid";
+import { Magnetometer } from "expo-sensors";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 export default function App() {
   const [{ x, y, z }, setData] = useState({
@@ -91,60 +91,70 @@ export default function App() {
   };
 
   return (
+    <Grid style={{ backgroundColor: "black" }}>
+      <Row style={{ alignItems: "center" }} size={0.9}>
+        <Col style={{ alignItems: "center" }}>
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: height / 26,
+              fontWeight: "bold",
+            }}
+          >
+            {_direction(_degree(magnetometer))}
+          </Text>
+        </Col>
+      </Row>
 
-      <Grid style={{ backgroundColor: 'black' }}>
-        <Row style={{ alignItems: 'center' }} size={.9}>
-          <Col style={{ alignItems: 'center' }}>
-            <Text
-                style={{
-                  color: '#fff',
-                  fontSize: height / 26,
-                  fontWeight: 'bold'
-                }}>
-              {_direction(_degree(magnetometer))}
-            </Text>
-          </Col>
-        </Row>
-
-        <Row style={{ alignItems: 'center' }} size={.1}>
-          <Col style={{ alignItems: 'center' }}>
-            <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
-              <Image source={require('../../assets/images/compass_pointer.png')} style={{
+      <Row style={{ alignItems: "center" }} size={0.1}>
+        <Col style={{ alignItems: "center" }}>
+          <View
+            style={{
+              position: "absolute",
+              width: width,
+              alignItems: "center",
+              top: 0,
+            }}
+          >
+            <Image
+              source={require("../../assets/images/compass_pointer.png")}
+              style={{
                 height: height / 26,
-                resizeMode: 'contain'
-              }} />
-            </View>
-          </Col>
-        </Row>
+                resizeMode: "contain",
+              }}
+            />
+          </View>
+        </Col>
+      </Row>
 
-        <Row style={{ alignItems: 'center' }} size={2}>
-          <Text style={{
-            color: '#fff',
+      <Row style={{ alignItems: "center" }} size={2}>
+        <Text
+          style={{
+            color: "#fff",
             fontSize: height / 27,
             width: width,
-            position: 'absolute',
-            textAlign: 'center'
-          }}>
-            {_degree(magnetometer)}°
-          </Text>
+            position: "absolute",
+            textAlign: "center",
+          }}
+        >
+          {_degree(magnetometer)}°
+        </Text>
 
-          <Col style={{ alignItems: 'center' }}>
-
-            <Image source={require("../../assets/images/compass_bg.png")} style={{
+        <Col style={{ alignItems: "center" }}>
+          <Image
+            source={require("../../assets/images/compass_bg.png")}
+            style={{
               height: width - 80,
-              justifyContent: 'center',
-              alignItems: 'center',
-              resizeMode: 'contain',
-              transform: [{ rotate: 360 - magnetometer + 'deg' }]
-            }} />
+              justifyContent: "center",
+              alignItems: "center",
+              resizeMode: "contain",
+              transform: [{ rotate: 360 - magnetometer + "deg" }],
+            }}
+          />
+        </Col>
+      </Row>
 
-          </Col>
-        </Row>
-
-        <Row style={{ alignItems: 'center' }} size={1}>
-        </Row>
-
-      </Grid>
-
+      <Row style={{ alignItems: "center" }} size={1}></Row>
+    </Grid>
   );
 }
