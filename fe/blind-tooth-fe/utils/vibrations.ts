@@ -1,5 +1,6 @@
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { Vibration } from "react-native";
 
 type VibrationMode = "off" | "soft" | "medium" | "heavy";
 
@@ -28,4 +29,27 @@ export function useVibrationsMode() {
   }
 
   return { vibrationsMode, storeVibrationsMode };
+}
+
+const pattern_sym_short_one_shot: number[] = [80, 80];
+const pattern_sym_short_two_shot: number[] = [
+  ...pattern_sym_short_one_shot,
+  ...pattern_sym_short_one_shot,
+];
+const pattern_sym_short_thee_shot: number[] = [
+  ...pattern_sym_short_one_shot,
+  ...pattern_sym_short_one_shot,
+  ...pattern_sym_short_one_shot,
+];
+
+export function vibrateShort() {
+  Vibration.vibrate(pattern_sym_short_one_shot);
+}
+
+export function vibrateMedium() {
+  Vibration.vibrate(pattern_sym_short_two_shot);
+}
+
+export function vibrateLong() {
+  Vibration.vibrate(pattern_sym_short_thee_shot);
 }
