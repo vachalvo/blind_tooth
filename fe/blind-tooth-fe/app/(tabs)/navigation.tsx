@@ -91,7 +91,6 @@ export default function App() {
           Calls.post(
             "https://amvz1r06k6.execute-api.eu-west-1.amazonaws.com/default/postData",
             {
-              userId: userId,
               compass: 180,
               gps: {
                 longtitude: location.coords.longitude,
@@ -101,6 +100,11 @@ export default function App() {
               },
               wifiSignalStrength:
                 state.type === "wifi" ? state.details.strength : null,
+            },
+            {
+              headers: {
+                ["logged-user-id"]: userId,
+              },
             }
           ).catch((err) => console.error(err));
         })
