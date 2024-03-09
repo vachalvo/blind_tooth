@@ -88,18 +88,21 @@ export default function App() {
           );
 
           console.log(userId);
-          Calls.post("data", {
-            userId: userId,
-            compass: 180,
-            gps: {
-              longtitude: location.coords.longitude,
-              latitude: location.coords.latitude,
-              atltitude: location.coords.altitude,
-              accuracy: location.coords.accuracy,
-            },
-            wifiSignalStrength:
-              state.type === "wifi" ? state.details.strength : null,
-          }).catch((err) => console.error(err));
+          Calls.post(
+            "https://amvz1r06k6.execute-api.eu-west-1.amazonaws.com/default/postData",
+            {
+              userId: userId,
+              compass: 180,
+              gps: {
+                longtitude: location.coords.longitude,
+                latitude: location.coords.latitude,
+                atltitude: location.coords.altitude,
+                accuracy: location.coords.accuracy,
+              },
+              wifiSignalStrength:
+                state.type === "wifi" ? state.details.strength : null,
+            }
+          ).catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
     }, 250);
@@ -111,11 +114,18 @@ export default function App() {
     const interval = setInterval(async () => {
       let response;
       try {
-        response = await Calls.get<ResponseData>("data", {
-          // TODO, tady musi byt kamarad
-          userId: userId,
-          loggedUserId: userId,
-        });
+        response = await Calls.get<ResponseData>(
+          "https://7gw9q7p1i4.execute-api.eu-west-1.amazonaws.com/default/getData",
+          {
+            params: {
+              // TODO, tady musi byt kamarad
+              userId: userId,
+            },
+            headers: {
+              ["logged-user-id"]: userId,
+            },
+          }
+        );
       } catch (error) {
         console.error(error);
         return;

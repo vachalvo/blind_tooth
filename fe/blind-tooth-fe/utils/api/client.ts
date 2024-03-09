@@ -1,16 +1,15 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-const baseUrl =
-  "https://qd25mzh8u1.execute-api.eu-west-1.amazonaws.com/default/restApi/";
+const baseUrl = "";
 
 const Calls = {
   post: <T extends object>(endpoint: string, body: T) => {
-    console.log(`${baseUrl}${endpoint}`)
+    console.log(`${baseUrl}${endpoint}`);
     return axios.post<T>(`${baseUrl}${endpoint}`, body);
   },
-  get: <T extends object>(endpoint: string, body: any) => {
+  get: <T extends object>(endpoint: string, args: AxiosRequestConfig<T>) => {
     // console.log(`${baseUrl}${endpoint}`);
-    return axios.get<T>(`${baseUrl}${endpoint}`, { params: { ...body } });
+    return axios.get<T>(`${baseUrl}${endpoint}`, args);
   },
 };
 
