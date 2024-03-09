@@ -16,7 +16,7 @@ import {
 } from "@react-native-community/netinfo";
 
 import * as NetInfo from "@react-native-community/netinfo";
-import { Button, Text } from "react-native-paper";
+import { Button, Surface, Text } from "react-native-paper";
 import { Link } from "expo-router";
 import Colors from "@/constants/Colors";
 
@@ -42,13 +42,104 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Surface
+        mode="flat"
+        elevation={0}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 8,
+        }}
+      >
+        <Surface
+          elevation={0}
+          mode="flat"
+          style={{
+            display: "flex",
+            gap: 12,
+            borderWidth: 2,
+            borderColor: "white",
+          }}
+        >
+          <Button
+            style={{
+              backgroundColor: "red",
+            }}
+          >
+            TODO
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: Colors.share.background,
+            }}
+          >
+            Sdílet kontakt
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: Colors.contacts.background,
+            }}
+          >
+            Kontakty
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: Colors.contacts.background,
+            }}
+          >
+            Přidat kontakt
+          </Button>
+        </Surface>
+
+        <Surface
+          elevation={0}
+          mode="flat"
+          style={{
+            display: "flex",
+            gap: 12,
+            borderWidth: 2,
+            borderColor: "white",
+          }}
+        >
+          <Button
+            style={{
+              backgroundColor: Colors.vibrations.background,
+            }}
+          >
+            Nastavení
+          </Button>
+
+          <Link href="/vibrations">
+            <Button
+              style={{
+                backgroundColor: Colors.vibrations.background,
+              }}
+            >
+              Zvuk a vibrace
+            </Button>
+          </Link>
+
+          <Button
+            style={{
+              backgroundColor: "red",
+            }}
+          >
+            TODO
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: Colors.navigation.background,
+            }}
+          >
+            STOP
+          </Button>
+        </Surface>
+      </Surface>
+
       {(netInfo as any) && (
         <Text>{JSON.stringify(netInfo as any, null, 2)}</Text>
       )}

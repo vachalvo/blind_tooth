@@ -23,4 +23,7 @@ export default {
 
   contacts: { background: "#00B812" },
   share: { background: "#FF00D6" },
+  vibrations: {
+    background: "#FFFFFF",
+  },
 };
