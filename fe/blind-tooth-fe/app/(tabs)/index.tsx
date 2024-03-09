@@ -1,52 +1,17 @@
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { View } from "@/components/Themed";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import * as NetInfo from "@react-native-community/netinfo";
 import { Surface, Text } from "react-native-paper";
 import { Link } from "expo-router";
 import Colors from "@/constants/Colors";
 import { Button } from "@/components/Button";
-import Calls from "@/utils/api/client";
 
 export default function TabOneScreen() {
   const [netInfo, setNetInfo] = useState<unknown>();
   const [count, setCount] = useState(0);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     NetInfo.refresh()
-  //       .then((state) => {
-  //         console.log("Connection type", state.type);
-  //         console.log("Is connected?", state.isConnected);
-  //         console.log(state.details);
-  //         setNetInfo(() => state);
-  //         setCount((prev) => prev + 1);
-  //       })
-  //       .catch((err) => console.error(err));
-  //   }, 2000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  const getTest = async () => {
-    // const res = await Calls.get("", { userId: "Martin" });
-    // console.log(res.data);
-    // const ressss = await Calls.post("", {
-    //   userId: "Martin",
-    //   compass: 180,
-    //   gps: {
-    //     longtitude: 13.3,
-    //     latitude: 12.2,
-    //     atltitude: 50.3,
-    //   },
-    //   wifiSignalStrength: null,
-    // });
-    // console.log(ressss);
-  };
 
   return (
     <View style={styles.container}>
@@ -71,7 +36,6 @@ export default function TabOneScreen() {
             style={{
               backgroundColor: "blue",
             }}
-            onPress={() => getTest()}
           >
             Axios Test
           </Button>

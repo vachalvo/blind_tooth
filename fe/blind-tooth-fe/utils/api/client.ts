@@ -5,6 +5,7 @@ const baseUrl =
 
 const Calls = {
   post: <T extends object>(endpoint: string, body: T) => {
+    console.log(`${baseUrl}${endpoint}`)
     return axios.post<T>(`${baseUrl}${endpoint}`, body);
   },
   get: <T extends object>(endpoint: string, body: any) => {
