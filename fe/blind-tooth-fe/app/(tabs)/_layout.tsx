@@ -35,7 +35,6 @@ const CustomHeader = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 100,
-            backgroundColor: Colors.header.background,
             paddingTop: 20,
             paddingLeft: 20,
             paddingRight: 20
@@ -79,6 +78,7 @@ export default function TabLayout() {
                         title: "Sdílet",
                         tabBarLabelStyle: {fontSize: 18},
                         tabBarIcon: ({color}) => <TabBarIcon name="map-marker" color={color}/>,
+                        header: () => <CustomHeader/>,
                         unmountOnBlur: true,
                     }}
                 />
@@ -87,6 +87,7 @@ export default function TabLayout() {
                     options={{
                         title: "Hledat",
                         tabBarLabelStyle: {fontSize: 18},
+                        header: () => <CustomHeader/>,
                         tabBarIcon: ({color}) => <TabBarIcon name="phone" color={color}/>,
                     }}
                 />
