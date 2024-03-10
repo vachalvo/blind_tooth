@@ -19,16 +19,19 @@ import { Audio } from "@/components/audio";
 const { height, width } = Dimensions.get("window");
 
 let globalMagnometer = 0;
+let globalLatestData: ResponseData | undefined;
 
 export default function App() {
   const { friendUserId } = useLocalSearchParams<{ friendUserId?: string }>();
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [latestData, setLatestData] = useState<ResponseData>();
+  // const [latestData, setLatestData] = useState<ResponseData>();
   const { getItem } = useAsyncStorage(REGISTRATION_KEY);
 
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+
+  const [latestData, setLatestData] = useState<ResponseData>();
 
   const cache = useCache();
 
@@ -54,6 +57,7 @@ export default function App() {
         return;
       }
 
+      globalLatestData = latestData;
       setLatestData(latestData);
     }, 1000);
 
@@ -134,7 +138,7 @@ export default function App() {
     }, 750);
 
     return () => clearInterval(interval);
-  }, [userId, cache, setLatestData]);
+  }, [userId, cache]);
 
   const [subscription, setSubscription] = useState<any>(null);
   const [magnetometer, setMagnetometer] = useState<any>(0);
@@ -202,9 +206,10 @@ export default function App() {
     const interval = setInterval(() => {
       const aaa = MagnetometerUtils.getDirectionLevel(
         MagnetometerUtils.getDegree(globalMagnometer),
-        latestData?.angle ?? 0
+        globalLatestData?.angle ?? 0
       );
 
+      console.log("latestData", globalLatestData);
       console.log("aaa", aaa);
 
       if (aaa === 0) {
@@ -297,7 +302,7 @@ export default function App() {
           variant="headlineMedium"
           style={{ color: Colors.navigation.color }}
         >
-          Úhly: {Math.round(latestData?.angle ?? 0)}{" "}
+          Úhly: {Math.round(globalLatestData?.angle ?? 0)}{" "}
           {MagnetometerUtils.getDegree(globalMagnometer)}
         </Text>
       </View>
@@ -306,7 +311,7 @@ export default function App() {
           variant="headlineMedium"
           style={{ color: Colors.navigation.color }}
         >
-          Síla signálu: {latestData?.newSignalAvg}
+          Síla signálu: {globalLatestData?.newSignalAvg}
         </Text>
         <Text
           variant="headlineSmall"
