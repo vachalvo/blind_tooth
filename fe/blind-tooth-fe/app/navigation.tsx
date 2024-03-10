@@ -148,40 +148,44 @@ export default function App() {
     });
   }, []);
 
-    const _subscribe = () => {
+  const _subscribe = () => {
+    Magnetometer.requestPermissionsAsync().then((status) => {
+      if (!status.granted) {
+        alert("Permission to access location was denied");
+      }
+
+      setSubscription(
+        Magnetometer.addListener((data) => {
+          // setMagnetometer(MagnetometerUtils.getAngle(data));
+          globalMagnometer = MagnetometerUtils.getAngle(data);
+        })
+      );
+    });
+
+    Magnetometer.isAvailableAsync().then((available) => {
+      if (!available) {
         Magnetometer.requestPermissionsAsync().then((status) => {
-            if (!status.granted) {
-                alert("Permission to access location was denied");
-            }
+          if (!status.granted) {
+            alert("Permission to access location was denied");
+          }
 
-            setSubscription(
-                Magnetometer.addListener((data) => {
-                    setMagnetometer(MagnetometerUtils.getAngle(data));
-                })
-            );
+          setSubscription(
+            Magnetometer.addListener((data) => {
+              // setMagnetometer(MagnetometerUtils.getAngle(data));
+              globalMagnometer = MagnetometerUtils.getAngle(data);
+            })
+          );
         });
+      }
 
-        Magnetometer.isAvailableAsync().then((available) => {
-            if (!available) {
-                Magnetometer.requestPermissionsAsync().then((status) => {
-                    if (!status.granted) {
-                        alert("Permission to access location was denied");
-                    }
-
-                    setSubscription(
-                        Magnetometer.addListener((data) => {
-                            setMagnetometer(MagnetometerUtils.getAngle(data));
-                        })
-                    );
-                });
-            }
-
-            setSubscription(
-                Magnetometer.addListener((data) => {
-                    setMagnetometer(MagnetometerUtils.getAngle(data));
-                })
-            );
-        })};
+      setSubscription(
+        Magnetometer.addListener((data) => {
+          // setMagnetometer(MagnetometerUtils.getAngle(data));
+          globalMagnometer = MagnetometerUtils.getAngle(data);
+        })
+      );
+    });
+  };
 
   const _unsubscribe = () => {
     subscription && subscription.remove();
@@ -200,6 +204,9 @@ export default function App() {
         MagnetometerUtils.getDegree(globalMagnometer),
         latestData?.angle ?? 0
       );
+
+      console.log("aaa", aaa);
+
       if (aaa === 0) {
         Audio.Ok_way();
       } else if (aaa === 1) {
@@ -236,48 +243,78 @@ export default function App() {
   // }
 
   return (
-     <Grid style={{backgroundColor: Colors.navigation.background}}>
-         <Row style={{ alignItems: 'center' }} size={2}>
-             <Text style={{
-                 color: Colors.navigation.color,
-                 fontSize: height / 27,
-                 width: width,
-                 position: 'absolute',
-                 textAlign: 'center'
-             }}>
-                 {MagnetometerUtils.getDegree(magnetometer)}°
-             </Text>
+    <Grid style={{ backgroundColor: Colors.navigation.background }}>
+      <Row style={{ alignItems: "center" }} size={2}>
+        <Text
+          style={{
+            color: Colors.navigation.color,
+            fontSize: height / 27,
+            width: width,
+            position: "absolute",
+            textAlign: "center",
+          }}
+        >
+          {MagnetometerUtils.getDegree(globalMagnometer)}°
+        </Text>
 
-             <Col style={{ alignItems: 'center' }}>
-                 <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
-                     <View style={{height: height / 30, width: 4, backgroundColor: "black"}}/>
-                 </View>
-                 <Image source={require("../assets/images/compass_bg.png")} style={{
-                     height: width - 80,
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                     resizeMode: 'contain',
-                     transform: [{ rotate: 360 - magnetometer + 'deg' }]
-                 }} />
-
-             </Col>
-         </Row>
-        <View style={{alignItems: "center", padding: 20}}>
-            <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
-                Přibližná vzdálenost: {latestData?.distance}
-            </Text>
-            <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
-                Úhly: {latestData?.angle} {MagnetometerUtils.getDegree(magnetometer)}
-            </Text>
-        </View>
-         <View style={{alignItems: "center", padding: 20}}>
-             <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
-                 Síla signálu: {latestData?.newSignalAvg}
-             </Text>
-             <Text variant="headlineSmall" style={{color: Colors.navigation.color}}>
-                 {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
-             </Text>
-         </View>
-      </Grid>
+        <Col style={{ alignItems: "center" }}>
+          <View
+            style={{
+              position: "absolute",
+              width: width,
+              alignItems: "center",
+              top: 0,
+            }}
+          >
+            <View
+              style={{
+                height: height / 30,
+                width: 4,
+                backgroundColor: "black",
+              }}
+            />
+          </View>
+          <Image
+            source={require("../assets/images/compass_bg.png")}
+            style={{
+              height: width - 80,
+              justifyContent: "center",
+              alignItems: "center",
+              resizeMode: "contain",
+              transform: [{ rotate: 360 - globalMagnometer + "deg" }],
+            }}
+          />
+        </Col>
+      </Row>
+      <View style={{ alignItems: "center", padding: 20 }}>
+        <Text
+          variant="headlineMedium"
+          style={{ color: Colors.navigation.color }}
+        >
+          Přibližná vzdálenost: {Math.round(latestData?.distance ?? 0)}m
+        </Text>
+        <Text
+          variant="headlineMedium"
+          style={{ color: Colors.navigation.color }}
+        >
+          Úhly: {Math.round(latestData?.angle ?? 0)}{" "}
+          {MagnetometerUtils.getDegree(globalMagnometer)}
+        </Text>
+      </View>
+      <View style={{ alignItems: "center", padding: 20 }}>
+        <Text
+          variant="headlineMedium"
+          style={{ color: Colors.navigation.color }}
+        >
+          Síla signálu: {latestData?.newSignalAvg}
+        </Text>
+        <Text
+          variant="headlineSmall"
+          style={{ color: Colors.navigation.color }}
+        >
+          {direction === "good" ? "Vedeš si dobře" : "Moc ti to nejde"}
+        </Text>
+      </View>
+    </Grid>
   );
 }
