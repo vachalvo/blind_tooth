@@ -50,6 +50,7 @@ export default function TabOneScreen() {
                         alignItems: "center",
                     }}
                     textColor={Colors.contacts.color}
+                    fontSize={20}
                     labelStyle={{color: Colors.dark.background, fontSize: 20}}
                 >
                     Hledej
@@ -70,7 +71,8 @@ export default function TabOneScreen() {
                     alignItems: "center",
                   }}
                   textColor={Colors.navigation.color}
-                  labelStyle={{ color: Colors.dark.background, fontSize: 20 }}
+                  fontSize={20}
+                  labelStyle={{ color: Colors.dark.background}}
                 >
                     Sdílet polohu
                 </Button>
@@ -90,6 +92,7 @@ export default function TabOneScreen() {
                         alignItems: "center",
                     }}
                     textColor={Colors.settings.color}
+                    fontSize={20}
                     labelStyle={{color: Colors.dark.background, fontSize: 20}}
                 >
                     Nastavení

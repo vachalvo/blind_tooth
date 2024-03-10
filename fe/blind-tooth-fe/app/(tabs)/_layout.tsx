@@ -58,6 +58,7 @@ export default function TabLayout() {
                     tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
                     // Disable the static render of the header on web
                     // to prevent a hydration error in React Navigation v6.
+                    tabBarStyle: {height: 80},
                     headerShown: useClientOnlyValue(false, true),
                 }}
             >
@@ -65,6 +66,8 @@ export default function TabLayout() {
                     name="index"
                     options={{
                         headerShown: true,
+                        title: "Domů",
+                        tabBarLabelStyle: {fontSize: 18},
                         tabBarIcon: ({color}) => <TabBarIcon name="home" color={color}/>,
                         header: () => <CustomHeader/>,
                         unmountOnBlur: true
@@ -74,6 +77,7 @@ export default function TabLayout() {
                     name="findMe"
                     options={{
                         title: "Sdílet",
+                        tabBarLabelStyle: {fontSize: 18},
                         tabBarIcon: ({color}) => <TabBarIcon name="map-marker" color={color}/>,
                         unmountOnBlur: true,
                     }}
@@ -82,6 +86,7 @@ export default function TabLayout() {
                     name="contacts"
                     options={{
                         title: "Hledat",
+                        tabBarLabelStyle: {fontSize: 18},
                         tabBarIcon: ({color}) => <TabBarIcon name="phone" color={color}/>,
                     }}
                 />
