@@ -36,7 +36,7 @@ export default function App() {
           {params: {userId: searchQuery}}
       );
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return;
     }
 
