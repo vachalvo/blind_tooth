@@ -148,14 +148,40 @@ export default function App() {
     });
   }, []);
 
-  const _subscribe = () => {
-    setSubscription(
-      Magnetometer.addListener((data) => {
-        globalMagnometer = MagnetometerUtils.getAngle(data);
-        // setMagnetometer(MagnetometerUtils.getAngle(data));
-      })
-    );
-  };
+    const _subscribe = () => {
+        Magnetometer.requestPermissionsAsync().then((status) => {
+            if (!status.granted) {
+                alert("Permission to access location was denied");
+            }
+
+            setSubscription(
+                Magnetometer.addListener((data) => {
+                    setMagnetometer(MagnetometerUtils.getAngle(data));
+                })
+            );
+        });
+
+        Magnetometer.isAvailableAsync().then((available) => {
+            if (!available) {
+                Magnetometer.requestPermissionsAsync().then((status) => {
+                    if (!status.granted) {
+                        alert("Permission to access location was denied");
+                    }
+
+                    setSubscription(
+                        Magnetometer.addListener((data) => {
+                            setMagnetometer(MagnetometerUtils.getAngle(data));
+                        })
+                    );
+                });
+            }
+
+            setSubscription(
+                Magnetometer.addListener((data) => {
+                    setMagnetometer(MagnetometerUtils.getAngle(data));
+                })
+            );
+        })};
 
   const _unsubscribe = () => {
     subscription && subscription.remove();
