@@ -53,7 +53,7 @@ export default function App() {
       }
 
       if (cache.isStale(latestData)) {
-        alert("Data is stale");
+        console.error("Data is stale");
         return;
       }
 
@@ -234,18 +234,33 @@ export default function App() {
 
   if (userId === null) return <Redirect href={"/register"} />;
 
+  const aaa = MagnetometerUtils.getDirectionLevel(
+    MagnetometerUtils.getDegree(globalMagnometer),
+    globalLatestData?.angle ?? 0
+  );
+
+  console.log("latestData", globalLatestData);
+  console.log("aaa", aaa);
+
+  let instruction = "";
+  if (aaa === 0) {
+    instruction = "Pokračujte rovně";
+  } else if (aaa === 1) {
+    instruction = "Mírně doprava";
+  } else if (aaa === 2) {
+    instruction = "Značně doprava";
+  } else if (aaa === -1) {
+    instruction = "Mírně doleva";
+  } else if (aaa === -2) {
+    instruction = "Značně doprava";
+  } else {
+    instruction = "Otočte se";
+  }
+
   const direction =
     (latestData?.newSignalAvg ?? 0) - (latestData?.oldSignalAvg ?? 0) >= 0
       ? "good"
       : "bad";
-
-  // if (direction === "good") {
-  //   vibrateShort();
-  // }
-
-  // if (direction === "bad") {
-  //   vibrateLong();
-  // }
 
   return (
     <Grid style={{ backgroundColor: Colors.navigation.background }}>
@@ -302,8 +317,9 @@ export default function App() {
           variant="headlineMedium"
           style={{ color: Colors.navigation.color }}
         >
-          Úhly: {Math.round(globalLatestData?.angle ?? 0)}{" "}
-          {MagnetometerUtils.getDegree(globalMagnometer)}
+          {/* Úhly: {Math.round(globalLatestData?.angle ?? 0)}{" "} */}
+          {/* {MagnetometerUtils.getDegree(globalMagnometer)} */}
+          {instruction}
         </Text>
       </View>
       <View style={{ alignItems: "center", padding: 20 }}>

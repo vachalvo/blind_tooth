@@ -68,6 +68,7 @@ function RootLayoutNav() {
             name="vibrations"
             options={{ title: "Zvuk a vibrace" }}
           />
+          <Stack.Screen name="navigation" options={{ title: "Navigace" }} />
         </Stack>
       </ThemeProvider>
     </PaperProvider>
