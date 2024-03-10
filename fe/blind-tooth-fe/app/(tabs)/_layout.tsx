@@ -29,6 +29,7 @@ const CustomHeader = () => {
         storeVibrationsMode(vibrationsMode === "off" ? "soft" : "off");
     }
 
+    console.log(vibrationsMode);
     return (
         <View style={{
             flexDirection: 'row',
@@ -43,7 +44,7 @@ const CustomHeader = () => {
 
             <View style={{flexDirection: "row", gap: 10, marginTop: 15}}>
                 <Button style={{backgroundColor: soundsMode === "on" ? Colors.on.background : Colors.off.background}} icon={soundsMode === "on" ? 'volume-high' : 'volume-mute' } onPress={onSoundClicked}>Zvuk</Button>
-                <Button style={{backgroundColor: vibrationsMode === "off" ? Colors.off.background : Colors.on.background}} icon={vibrationsMode === "off" ? 'cellphone' : 'vibrate'} onPress={onVibrationsClicked}>Vibrace</Button></View>
+                <Button style={{backgroundColor: vibrationsMode === "off" || vibrationsMode === null  ? Colors.off.background : Colors.on.background}} icon={vibrationsMode === "off" || vibrationsMode === null ? 'cellphone' : 'vibrate'} onPress={onVibrationsClicked}>Vibrace</Button></View>
         </View>
     );
 };
