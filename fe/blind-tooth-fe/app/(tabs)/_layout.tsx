@@ -40,7 +40,7 @@ const CustomHeader = () => {
             paddingLeft: 20,
             paddingRight: 20
         }}>
-            <View><Text style={{color: "white"}}>Stav</Text></View>
+            <View><Text style={{color: "white"}}></Text></View>
 
             <View style={{flexDirection: "row", gap: 10, marginTop: 15}}>
                 <Button style={{backgroundColor: soundsMode === "on" ? Colors.on.background : Colors.off.background}} icon={soundsMode === "on" ? 'volume-high' : 'volume-mute' } onPress={onSoundClicked}>Zvuk</Button>
