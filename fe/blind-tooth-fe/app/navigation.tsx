@@ -266,6 +266,9 @@ export default function App() {
             <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
                 Přibližná vzdálenost: {latestData?.distance}
             </Text>
+            <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
+                Úhly: {latestData?.angle} {MagnetometerUtils.getDegree(magnetometer)}
+            </Text>
         </View>
          <View style={{alignItems: "center", padding: 20}}>
              <Text variant="headlineMedium" style={{color: Colors.navigation.color}}>
