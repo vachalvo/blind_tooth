@@ -96,7 +96,7 @@ export namespace Audio {
   export const Bad_Right_2 = audioSequence.bind(
     $3beep_short,
     2,
-    -800,
+    -300,
     pattern_thee_shot
   );
   export const Bad_Left_1 = audioSequence.bind(
@@ -108,7 +108,7 @@ export namespace Audio {
   export const Bad_Left_2 = audioSequence.bind(
     $2beep_short,
     2,
-    -800,
+    -300,
     pattern_two_shot
   );
 }
