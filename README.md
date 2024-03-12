@@ -44,14 +44,12 @@ Our team focused on the topic - localization of the blind in a small space.
 
 ## 💿 Installation
 
-Install project with npm
-
+Clone the repository 
 ```bash
   git clone [url]
 ```
 
 After cloning the repository
-
 ```bash
   cd fe/blind-tooth-fe
 ```
@@ -80,5 +78,5 @@ If you have any feedback, please reach out to us via Issues tab.
 
 
 ## 📜 License
-Copyright © 2019 [Vojtěch Váchal](https://github.com/vachalvo).
+Copyright © 2024 [Vojtěch Váchal](https://github.com/vachalvo).
 This project is MIT licensed.
