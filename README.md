@@ -1,13 +1,13 @@
 
 <h1 align="center">Welcome to Blind Tooth - Localization tool 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://choosealicense.com/licenses/mit/" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-</p>
+
+## 💥0verview
 
 > A mobile application that serves to locate blind people in a relatively small area (e.g. 50 meters). Facilitates the meeting of two blind people.
+
+The project was created at #aimtechackaton2024, which focused on helping disabled people. In a time frame of 40 hours, we should have come up with an application that should mainly help.
+
+Our team focused on the topic - localization of the blind in a small space.
 
 ## Features
 
@@ -15,7 +15,7 @@
 - Easy and intuitive UI
 
 
-## Tech Stack
+## 💻 Tech Stack
 
 **Client:** Expo, React Native, Typescript, React Native Paper, Axios
 
@@ -44,7 +44,7 @@
 <a href="https://aws.amazon.com/dynamodb/" title="dynamo"> <img alt="dynoma" src="https://img.shields.io/badge/dynamo_db-blue?style=for-the-badge&logo=amazondynamodb&labelColor=black">
 </p>
 
-## Installation
+## 💿 Installation
 
 Install project with npm
 
@@ -67,12 +67,12 @@ To run project
 ```bash
   npm run start
 ```
-## Feedback
+## 📰 Feedback
 
 If you have any feedback, please reach out to us via Issues tab.
 
 
-## Authors
+## 🙋 Authors
 
 - [@markovd18](https://www.github.com/markovd18)
 - [@vachalvo](https://www.github.com/vachalvo)
@@ -81,6 +81,6 @@ If you have any feedback, please reach out to us via Issues tab.
 - [@nikimasek](https://www.github.com/nikimasek)
 
 
-## License
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+## 📜 License
+Copyright © 2019 [Vojtěch Váchal](https://github.com/vachalvo).
+This project is MIT licensed.
