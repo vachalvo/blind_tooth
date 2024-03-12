@@ -1,8 +1,6 @@
 
 <h1 align="center">Welcome to Blind Tooth - Localization tool 👋</h1>
 
-## 💥0verview
-
 > A mobile application that serves to locate blind people in a relatively small area (e.g. 50 meters). Facilitates the meeting of two blind people.
 
 The project was created at #aimtechackaton2024, which focused on helping disabled people. In a time frame of 40 hours, we should have come up with an application that should mainly help.
